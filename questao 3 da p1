@@ -67,10 +67,7 @@ int main (int argc, char ** argv)
 	fclose(saida);
 	
 }
-int sametime(){
-	
-		
-	}
+
 int buscabinaria(){
 	
 	
