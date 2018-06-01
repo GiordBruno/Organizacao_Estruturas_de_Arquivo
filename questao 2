@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct Registro Registro;
+struct Registro
+{
+	char chave[8];
+	char nome[40];
+	char email[40];
+	char telefone[12];
+	char rabiene[1];
+};
+int terminarCom(char* a, char* b);
+FILE *f, *s;
+
+int main (int argc, char ** argv){
+	Registro registro;
+	long ultimo=0;
+	f = fopen ("arq12.dat","r");
+	s = fopen("arq2.dat","w");
+	fseek(f,0,SEEK_END);
+	ultimo = ((ftell(f))/sizeof(registro));
+	printf("Numero de registro: %ld\n",ultimo);
+	printf("Tamanho do arquivo: %ld\n",(ftell(f)));
+
+	for (int i=0; i<ultimo; i++){
+		fseek(f, i*sizeof(struct Registro),SEEK_SET);
+		printf("posicao %ld ",i*sizeof(registro));
+		fread (&registro, sizeof(Registro),1,f);
+		printf("Chave %.8d Nome %.10s\n",registro.chave,registro.nome);
+		if (terminarCom(registro.email,"gmail.com")){
+		    fwrite (&registro, sizeof(Registro),1,s);
+            printf("Email terminado com gmail.com\n\n");
+        }
+	}
+	 system("pause");
+
+	fclose(f);
+	fclose(s);
+}
+
+int terminarCom(char *emailregistro, char *gmailcom){   
+	int cont1=0,cont2=0;
+
+    while (emailregistro[cont1]!=' '){ 
+		cont1++;
+    }
+    for (int i=0; i<strlen(gmailcom); i++){
+        if (emailregistro[i+(cont1-strlen(gmailcom))]!=gmailcom[i]){
+        	return 0;
+        }
+    }
+    return 1;
+}
