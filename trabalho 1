@@ -16,7 +16,7 @@ FILE *f = fopen("cep.dat","r");
 int i,cont=0,primeiro,meio,ultimo;
 endereco end;
 if(argc!=2){
-	fprintf(stderr,"USO: %s [CEP]",argv[1]);
+	fprintf(stderr,"USO: %s [CEP]",argv[0]);
 	return 1;
 }
 printf("Tamanho da estrutura %d\n",sizeof(endereco));
