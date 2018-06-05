@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+typedef struct Endereco endereco;
+struct Endereco{
+	char logradouro[72];
+	char bairro[72];
+	char municipio[72];
+	char uf[72];
+	char sigla[2];
+	char cep[8];
+	char lixo[2];
+};
+int main (int argc, char ** argv){
+FILE *f = fopen("cep.dat","r");
+int i,cont=0,primeiro,meio,ultimo;
+endereco end;
+if(argc!=2){
+	fprintf(stderr,"USO: %s [CEP]",argv[1]);
+	return 1;
+}
+printf("Tamanho da estrutura %d\n",sizeof(endereco));
+fseek(f,0,SEEK_END);
+printf("Quantidade de bytes no arquivo %ld\n",ftell(f));
+printf("Quantidade de registros no arquivo %ld\n",ftell(f)/sizeof(endereco));
+ultimo = (ftell(f)/sizeof(endereco))-1;
+primeiro = 0;
+rewind(f);
+meio = (primeiro+ultimo)/2;
+while(primeiro<=ultimo){
+	fseek(f,meio*sizeof(endereco),SEEK_SET);			 		
+	fread(&end,sizeof(endereco),1,f);
+	meio = (primeiro+ultimo)/2;
+	if(strncmp(argv[1],end.cep,8)==0){
+		printf("%.72s\n%.72s\n%.72s\n%.72s\n%.8s\n",end.logradouro,end.municipio,end.bairro,end.sigla,end.cep);
+		break;
+	}else if(strncmp(argv[1],end.cep,8)<0)
+				ultimo = meio-1;
+	 else if(strncmp(argv[1],end.cep,8)>0)
+	 			primeiro = meio+1;
+	
+	rewind(f);
+	cont++;
+}
+printf("Loops %d\n",cont);
+fclose(f);
+	return 0;
+}
