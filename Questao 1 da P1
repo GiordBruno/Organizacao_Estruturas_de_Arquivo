@@ -24,19 +24,24 @@ int main(){
  printf("Tamanho da estrutura %d\n\n",sizeof(struct registro));
  int primeiro,meio,ultimo,posicao;                       
  FILE *a,*saida;
+ 
  /*Abrindo o arquivo para escrita*/
  a=fopen("arq1.dat","w");
  fwrite(&r,sizeof(struct registro),8,a);
+ 
  /*Fechando o arquivo*/
  fclose(a);
+ 
  /*Abrindo o arquivo'a'para leitura e o arquivo 'saida' para escrita*/
  a = fopen("arq1.dat","r");
  saida = fopen("arq2.dat","w");
+ 
  /*calculando tamanho do registro em byte e em quantidade de registros*/
  fseek(a,0,SEEK_END);
  printf("Tamanho do arquivo 'arq1' em bytes %ld\n",ftell(a));
  printf("Quantidade de registros no arquivo 'arq1' %ld\n\n",ftell(a)/sizeof(struct registro));
  ultimo = (ftell(a)/sizeof(struct registro))-1;
+ 
  /*Lendo o arquivo 'a' do ultimo registro para o primeiro e escrendo no arquivo 'saida'.*/ 
 //fseek(a,ultimo*sizeof(struct aluno),SEEK_SET);
 printf("ultimo %d\n",ultimo);
