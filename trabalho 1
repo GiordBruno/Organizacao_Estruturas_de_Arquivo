@@ -26,11 +26,10 @@ printf("Quantidade de registros no arquivo %ld\n",ftell(f)/sizeof(endereco));
 ultimo = (ftell(f)/sizeof(endereco))-1;
 primeiro = 0;
 rewind(f);
-meio = (primeiro+ultimo)/2;
 while(primeiro<=ultimo){
+	meio = (primeiro+ultimo)/2;
 	fseek(f,meio*sizeof(endereco),SEEK_SET);			 		
 	fread(&end,sizeof(endereco),1,f);
-	meio = (primeiro+ultimo)/2;
 	if(strncmp(argv[1],end.cep,8)==0){
 		printf("%.72s\n%.72s\n%.72s\n%.72s\n%.8s\n",end.logradouro,end.municipio,end.bairro,end.sigla,end.cep);
 		break;
