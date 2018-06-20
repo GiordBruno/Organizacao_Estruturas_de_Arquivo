@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #pragma pack(1)
+typedef struct registro registro;
 struct registro{
     char chave[8];
     char nome[40];
@@ -11,27 +12,12 @@ struct registro{
 };
 
 int main(){
- struct registro r[7] = {{"10","Armando","gmail.com","147"},
-                         {"11","Eni","yahoo.com.br","258"},
-                         {"12","Elias","uol.com.br","369"},
-                         {"13","Luzia","uol.com.br","147"},
-                         {"14","Pedro","gmail.com","369"},
-						 {"15","Rena","yahoo.com.br","147"},
-                         {"16","Eunice","uol.com.br","369"}};
-                    
-
  int i=0,qt; 
  printf("Tamanho da estrutura %d\n\n",sizeof(struct registro));
  int primeiro,meio,ultimo,posicao;                       
  FILE *a,*saida;
- 
- /*Abrindo o arquivo para escrita*/
- a=fopen("arq1.dat","w");
- fwrite(&r,sizeof(struct registro),8,a);
- 
- /*Fechando o arquivo*/
- fclose(a);
- 
+ registro r; 
+  
  /*Abrindo o arquivo'a'para leitura e o arquivo 'saida' para escrita*/
  a = fopen("arq1.dat","r");
  saida = fopen("arq2.dat","w");
@@ -47,9 +33,9 @@ int main(){
 printf("ultimo %d\n",ultimo);
  
  while(ultimo>=0){
- 	fseek(a,ultimo*sizeof(struct registro),SEEK_SET);
- 	fread(&r,sizeof(struct registro),1,a);
- 	fwrite(&r,sizeof(struct registro),1,saida);
+ 	fseek(a,ultimo*sizeof(registro),SEEK_SET);
+ 	fread(&r,sizeof(registro),1,a);
+ 	fwrite(&r,sizeof(registro),1,saida);
  	--ultimo;
  }
  
