@@ -12,7 +12,7 @@ struct Endereco{
 	char lixo[2];
 };
 int main (int argc, char ** argv){
-FILE *f = fopen("cep.dat","r");
+FILE *f = fopen("arquivoTrabalho1.dat","r");
 int i,cont=0,primeiro,meio,ultimo;
 endereco end;
 if(argc!=2){
