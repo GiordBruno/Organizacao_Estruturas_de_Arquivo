@@ -37,8 +37,7 @@ while(primeiro<=ultimo){
 				ultimo = meio-1;
 	 else if(strncmp(argv[1],end.cep,8)>0)
 	 			primeiro = meio+1;
-	
-	rewind(f);
+
 	cont++;
 }
 printf("Loops %d\n",cont);
