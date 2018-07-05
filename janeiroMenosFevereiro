@@ -1,0 +1,41 @@
+import struct
+import hashlib
+import os
+import sys
+
+hashSize = 15485867
+keyColumnIndex = 7
+def h(key):
+    global hashSize
+    return int(hashlib.sha1(key).hexdigest(),16)%hashSize
+
+    f1 = open(str(sys.argv[1]),"r")
+    f2 = open(str(sys.argv[2]), "r+b")
+    f3 = open(str(sys.argv[3]), "a+")
+    a = f1.readline()
+    f3.write(a)
+    indexFormat = "14sLL"
+    indexStruct = struct.Struct(indexFormat)
+
+    while True:
+        line = f1.readline()
+        splitLine = line.split('\t')
+        if line == "":  # EOF
+            break
+        x = splitLine[keyColumnIndex]#x é a informacao a ser analisada no caso o nis
+        p = h(x)# p é a posicao na tabela hash
+        offset = p * indexStruct.size
+        i = 1
+        while True:
+            f2.seek(offset, os.SEEK_SET)
+            indexRecord = indexStruct.unpack(f2.read(indexStruct.size))
+            if indexRecord[0] == x:
+                break
+            offset = indexRecord[2]
+            if offset == 0:
+                f3.write(line)
+                break
+            i += 1
+    f1.close()
+    f2.close()
+    f3.close()
