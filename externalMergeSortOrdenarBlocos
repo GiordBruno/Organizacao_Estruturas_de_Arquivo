@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 15 de jun de 2018
+@author: Bruno Ferreira:.
+'''
 import struct
 import sys
 import os
